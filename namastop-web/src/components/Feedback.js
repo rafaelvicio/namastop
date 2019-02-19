@@ -1,49 +1,44 @@
 import React, { Component, Fragment } from "react";
 
+import { Link } from "react-router-dom";
+
 import Moment from "react-moment";
 import Gravatar from "react-gravatar";
 
 class Home extends Component {
   render() {
+    const { feedback } = this.props;
     return (
       <Fragment>
-        <dialog className="nes-dialog" id="dialog-default">
-          <form method="dialog">
-            <p className="title">Dialog</p>
-            <p>Alert: this is a dialog.</p>
-          </form>
-        </dialog>
-
         <div className="nes-container with-title left cardNamastop">
           <p className="title">
-            <Moment format="DD/MM/YYYY">{this.props.feedback.createAt}</Moment>
+            <Moment format="DD/MM/YYYY">{feedback.createAt}</Moment>
           </p>
           <p>
-            De:
+            From:
             <Gravatar
-              email={this.props.feedback.fromEmail}
+              email={feedback.fromEmail}
               size={100}
               rating="pg"
               className="nes-avatar is-rounded"
             />
           </p>
-          <p>{this.props.feedback.message.substring(0, 100)}</p>
+          <p>{feedback.message.substring(0, 100)}</p>
           <p align="right">
-            Para:
+            To:
             <Gravatar
-              email={this.props.feedback.toEmail}
+              email={feedback.toEmail}
               size={100}
               rating="pg"
               className="nes-avatar is-rounded"
             />
           </p>
-          <button
-            type="button"
-            onClick="document.getElementById('dialog-default').showModal();"
-            className="nes-btn show-code copy"
+          <Link
+            to={`/feedbacks/${feedback._id}`}
+            className="nes-btn show-code copy link-more"
           >
             More
-          </button>
+          </Link>
         </div>
       </Fragment>
     );

@@ -19,6 +19,11 @@ controller.hears("namastop", "direct_message", async function(bot, message) {
     const to = utils.getUserFromMessage(text);
     const formatText = utils.getFormatText(text, to);
 
+    if (to == "") {
+      bot.reply(message, "Oops, I could not identify who your message was.");
+      return;
+    }
+
     getUserInformation(user).then(fromInformations => {
       getUserInformation(to).then(toInforations => {
         const feedback = {
