@@ -5,4 +5,6 @@ const getUserFromMessage = message => {
   return to;
 };
 
-export default getUserFromMessage;
+module.exports = {
+  getUserFromMessage
+};
