@@ -5,6 +5,9 @@ const FeedbackSchema = new mongoose.Schema({
     type: String,
     require: true
   },
+  toEmail: {
+    type: String
+  },
   message: {
     type: String,
     require: true
@@ -12,6 +15,9 @@ const FeedbackSchema = new mongoose.Schema({
   from: {
     type: String,
     require: true
+  },
+  fromEmail: {
+    type: String
   },
   createAt: {
     type: Date,

@@ -1,9 +1,8 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 
 import { getFeedbacks } from "../api/NamastopAPI";
 
-import Moment from "react-moment";
+import Feedback from "./Feedback";
 
 class Home extends Component {
   state = {
@@ -19,31 +18,30 @@ class Home extends Component {
   render() {
     return (
       <div>
-        <h1>Lista de Feedbacks:</h1>
-        <table>
-          <thead>
-            <tr>
-              <th>Data de Envio</th>
-              <th>Mesagem</th>
-              <th>De</th>
-            </tr>
-          </thead>
-          <tbody>
+        <header>
+          <h1>Namastop</h1>
+          <p>Reminding you to be grateful.</p>
+        </header>
+
+        <section className="nes-container">
+          <div className="containers" id="containers">
             {this.state.feedbacks.map(feedback => (
-              <tr key={feedback._id}>
-                <td>
-                  <Moment format="DD/MM/YYYY HH:mm">{feedback.createAt}</Moment>
-                </td>
-                <td>{feedback.message}</td>
-                <td>{feedback.from}</td>
-                <td>
-                  {" "}
-                  <Link to={`/feedbacks/${feedback._id}`}>Detalhar</Link>
-                </td>
-              </tr>
+              <Feedback feedback={feedback} />
             ))}
-          </tbody>
-        </table>
+          </div>
+        </section>
+
+        <footer className="footer">
+          <p>
+            <a href="https://www.novatics.com.br" target="_blank">
+              Novatics
+            </a>
+            <span>-</span>
+            <a href="https://github.com/rafaelvicio" target="_blank">
+              @rafaelvicio
+            </a>
+          </p>
+        </footer>
       </div>
     );
   }

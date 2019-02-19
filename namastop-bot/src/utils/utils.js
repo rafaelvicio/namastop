@@ -4,6 +4,11 @@ const getUserFromMessage = message => {
   return message.substring(start + 1, end);
 };
 
+const getFormatText = (text, user) => {
+  return text.replace("namastop", "").replace(`<@${user}>`, "");
+};
+
 module.exports = {
-  getUserFromMessage
+  getUserFromMessage,
+  getFormatText
 };

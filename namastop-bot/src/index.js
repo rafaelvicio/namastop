@@ -17,31 +17,34 @@ controller.hears("namastop", "direct_message", async function(bot, message) {
     const { text, user } = message;
 
     const to = utils.getUserFromMessage(text);
+    const formatText = utils.getFormatText(text, to);
 
-    const fromInformations = await getUserInformation(user);
-    const toInformations = await getUserInformation(to);
+    getUserInformation(user).then(fromInformations => {
+      getUserInformation(to).then(toInforations => {
+        const feedback = {
+          to: toInforations.name,
+          toEmail: toInforations.profile.email,
+          message: formatText,
+          from: fromInformations.name,
+          fromEmail: fromInformations.profile.email
+        };
 
-    console.log("---------------------->", fromInformations);
-    console.log("---------------------->", toInformations);
+        axios.post("http://localhost:3333/api/feedbacks", feedback);
 
-    const feedback = {
-      to: to,
-      message: text,
-      from: user
-    };
-
-    await axios.post("http://localhost:3333/api/feedbacks", feedback);
-
-    bot.reply(message, "Your feedback has been sent successfully ;)");
+        bot.reply(message, "Your feedback has been sent successfully ;)");
+      });
+    });
   } catch (error) {
     bot.reply(message, "Your feedback could not be sent, please try again :/");
   }
 });
 
 const getUserInformation = async user => {
-  bot.api.users.info({ user }, (error, response) => {
-    console.log("-------------> Retornando as informações do user");
-    return response.user.name;
+  return new Promise((resolve, reject) => {
+    return bot.api.users.info({ user }, (error, response) => {
+      if (error != null) reject(error);
+      resolve(response.user);
+    });
   });
 };
 
